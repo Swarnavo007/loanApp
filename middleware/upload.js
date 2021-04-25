@@ -1,10 +1,13 @@
 const path = require("path");
+const fs = require('fs');
 const multer = require("multer");
 var image_name;
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    fs.mkdir('./uploads/',(err)=>{
+      cb(null, './uploads/');
+   });
   },
   filename: function (req, file, cb) {
     let ext = path.extname(file.originalname);
