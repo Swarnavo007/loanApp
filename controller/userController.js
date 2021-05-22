@@ -12,7 +12,6 @@ const getUser=async (req,res,next)=>{
 
 const createUser = async(req,res,next)=> {
     try{
-        const url = req.protocol + "://" + req.get("host");
         const user = new User({
             phoneNumber:req.body.phoneNumber,
             firstName:req.body.firstName,
@@ -26,10 +25,6 @@ const createUser = async(req,res,next)=> {
             adhaarCardNumber:req.body.adhaarCardNumber,
             panCardNumber:req.body.panCardNumber,
             bankDetails:req.body.bankDetails,
-            selfPicture:url + "\\" + req.file.self[0],
-            adhaarCardPicture:url + "\\" + req.file.adhaar[0],
-            panCardPicture:url + "\\" + req.file.pan[0],
-            bankPassbookPicture:url + "\\" + req.file.bankPass[0],
             date:Date.now()
         });
         await user.save();

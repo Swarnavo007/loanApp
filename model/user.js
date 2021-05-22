@@ -21,10 +21,6 @@ const UserSchema=new mongoose.Schema({
         bankAccountNumber:Number,
         bankAccountName:String
     },
-    selfPicture:{type:String},
-    adhaarCardPicture:{type:String},
-    panCardPicture:{type:String},
-    bankPassbookPicture:{type:String},
     date:{type:Date}
 })
 

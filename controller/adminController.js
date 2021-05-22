@@ -12,13 +12,13 @@ const getAdmin=async (req,res,next)=>{
 
 const createAdmin = async(req,res,next)=> {
     try{
-        const url = req.protocol + "://" + req.get("host");
-        const user = new Admin({
+        const admin = new Admin({
             bankAccountname:req.body.bankAccountname,
             bankAccountNumber:req.body.bankAccountNumber,
             bankIFSCCode:req.body.bankIFSCCode,
-            bankImage:url + "\\" + req.file.path
         })
+        await admin.save();
+        return res.status(201).json(admin);
     }
     catch(e){
         return res.status(500).json(e);
@@ -28,21 +28,10 @@ const createAdmin = async(req,res,next)=> {
 const updateAdminById = async(req,res,next) => {
     try{
         const id = req.body.id;
-        const url = req.protocol + "://" + req.get("host");
         const updateAdmin = {
             bankAccountname:req.body.bankAccountname,
             bankAccountNumber:req.body.bankAccountNumber,
             bankIFSCCode:req.body.bankIFSCCode
-        }
-        if (req.file) {
-            updateAdmin.bankImage = url + "\\" + req.file.path;
-            previousImage = await Product.findOne({ _id: id });
-            previousImageFile = previousImage.bankImage;
-            var index = previousImageFile.indexOf("uploads");
-            await fs.unlink(previousImageFile.slice(index), function (err) {
-              if (err) throw err;
-              console.log("File deleted!");
-            });
         }
         await Admin.findOneAndUpdate({ _id: id }, updateAdmin);
         return res.json({ msg: "Data updated Successfully" });
